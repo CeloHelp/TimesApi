@@ -1,6 +1,7 @@
 package com.apilearn.TimesApi.controller;
 
 import com.apilearn.TimesApi.dto.BookDTO;
+import com.apilearn.TimesApi.dto.CategoryListDTO;
 import com.apilearn.TimesApi.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,4 +40,18 @@ public class BookController {
     public String testEndpoint() {
         return "API Working";
     }
+
+    @GetMapping("/categories")
+    public List<CategoryListDTO.CategoryList> getAllCategories(){
+        return bookService.getAllCategories();
+    }
+
+    @GetMapping("/bestsellers/by-date-range")
+    public List<BookDTO.BookInfo> getBestSellersByDateRange(
+            @RequestParam String listName,
+            @RequestParam String startDate,
+            @RequestParam String endDate) {
+        return bookService.getBestSellersByDateRange(listName, startDate, endDate);
+    }
+
 }
