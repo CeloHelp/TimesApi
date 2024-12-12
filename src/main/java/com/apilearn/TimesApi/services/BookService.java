@@ -26,7 +26,9 @@ public class BookService {
         BookDTO response = restTemplate.getForObject(url, BookDTO.class);
 
         if (response != null && response.results() != null) {
-            return response.results().bookInfos(); // Acesse a lista de livros
+            return response.results().stream()
+                    .flatMap(results -> results.bookInfos().stream())
+                    .toList(); // Acesse a lista de livros
         } else {
             throw new RuntimeException("Nenhum dado encontrado para a lista: " + listName);
         }
@@ -51,8 +53,8 @@ public class BookService {
 
             if (response != null && response.results() != null) {
                 return response.results().stream()
-                        .flatMap(result -> result.bookInfos().stream()) // Extrai os BookInfos de cada resultado
-                        .collect(Collectors.toList());
+                        .flatMap(results -> results.bookInfos().stream())
+                        .toList();
             } else {
                 return List.of(); // Retorna uma lista vazia se não houver resultados
             }

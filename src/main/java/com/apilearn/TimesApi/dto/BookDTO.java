@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 public record BookDTO(
-        @JsonAlias("results") Results results)
- { @JsonIgnoreProperties(ignoreUnknown = true)
+        @JsonAlias("results") List<Results> results
+)
+ {
+     @JsonIgnoreProperties(ignoreUnknown = true)
  public record Results(
          @JsonAlias("books") List<BookInfo> bookInfos
  ){}
